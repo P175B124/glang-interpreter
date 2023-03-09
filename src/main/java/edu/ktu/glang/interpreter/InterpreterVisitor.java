@@ -23,10 +23,26 @@ public class InterpreterVisitor extends GLangBaseVisitor<Object> {
     }
 
     @Override
+    public Object visitVariableDeclaration(GLangParser.VariableDeclarationContext ctx) {
+        String varName = ctx.ID().getText();
+        Object value = visit(ctx.expression());
+        if (!this.symbolTable.contains(varName)) {
+            this.symbolTable.put(varName, value);
+        } else {
+            throw new RuntimeException("Variable already exists.");
+        }
+        return null;
+    }
+
+    @Override
     public Object visitAssignment(GLangParser.AssignmentContext ctx) {
         String varName = ctx.ID().getText();
         Object value = visit(ctx.expression());
-        this.symbolTable.put(varName, value);
+        if (this.symbolTable.contains(varName)) {
+            this.symbolTable.put(varName, value);
+        } else {
+            throw new RuntimeException("Undeclared variable.");
+        }
         return null;
     }
 

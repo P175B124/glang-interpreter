@@ -3,10 +3,13 @@ grammar GLang;
 program : statement+ EOF ;
 
 statement
-    : assignment ';'
+    : variableDeclaration ';'
+    | assignment ';'
     | ifStatement
     | printStatement ';'
     ;
+
+variableDeclaration : TYPE ID '=' expression ;
 
 assignment : ID '=' expression ;
 
@@ -27,6 +30,10 @@ ifStatement : 'if' '(' expression relationOp expression ')' '{' statement '}'
 relationOp : '==' | '!=' ;
 
 printStatement : PRINT '(' expression ')' ;
+
+TYPE    : 'int'
+        | 'bool'
+        ;
 
 PRINT   : 'print';
 ID      : [a-zA-Z]+ ;
