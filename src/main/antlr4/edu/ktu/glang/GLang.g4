@@ -34,6 +34,7 @@ printStatement : PRINT '(' expression ')' ;
 
 TYPE    : 'int'
         | 'bool'
+        | 'text'
         ;
 
 PRINT   : 'print';
