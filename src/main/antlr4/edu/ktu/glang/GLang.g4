@@ -16,6 +16,7 @@ assignment : ID '=' expression ;
 expression
     : INT                               #intExpression
     | ID                                #idExpression
+    | STRING                            #stringExpression
     | '(' expression ')'                #parenthesesExpression
     | expression intMultiOp expression  #intMultiOpExpression
     | expression intAddOp expression    #intAddOpExpression
@@ -38,6 +39,11 @@ TYPE    : 'int'
 PRINT   : 'print';
 ID      : [a-zA-Z]+ ;
 INT     : [0-9]+ ;
+
+/** supports escaped quotes and backslashes */
+STRING
+    : '"' ( '\\' . | ~["\\] )* '"'
+    ;
 
 COMMENT : ( '//' ~[\r\n]* | '/*' .*? '*/' ) -> skip ;
 WS      : [ \t\r\n]+ -> skip ;

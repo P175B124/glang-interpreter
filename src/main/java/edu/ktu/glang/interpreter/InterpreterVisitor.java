@@ -58,6 +58,23 @@ public class InterpreterVisitor extends GLangBaseVisitor<Object> {
     }
 
     @Override
+    public Object visitStringExpression(GLangParser.StringExpressionContext ctx) {
+        String raw = ctx.STRING().getText();
+        String unquoted = raw.substring(1, raw.length() - 1);  // remove quotes
+        String value = unescape(unquoted);             // decode escapes
+        return value;
+    }
+
+    private static String unescape(String s) {
+        return s
+                .replace("\\n", "\n")
+                .replace("\\t", "\t")
+                .replace("\\r", "\r")
+                .replace("\\\"", "\"")
+                .replace("\\\\", "\\");
+    }
+
+    @Override
     public Object visitPrintStatement(GLangParser.PrintStatementContext ctx) {
         String text = visit(ctx.expression()).toString();
         //System.out.println(text);
