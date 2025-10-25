@@ -1,7 +1,7 @@
 lexer grammar GLangLexer;
 
 /* Keywords */
-TYPE    : 'int' | 'bool' ;
+TYPE    : 'int' | 'bool' | 'string' ;
 PRINT   : 'print' ;
 IF      : 'if' ;
 ELSE    : 'else' ;
