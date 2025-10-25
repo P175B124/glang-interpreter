@@ -1,12 +1,14 @@
-grammar GLang;
+parser grammar GLangParser;
+
+options { tokenVocab = GLangLexer; }
 
 program : statement+ EOF ;
 
 statement
-    : variableDeclaration ';'
-    | assignment ';'
+    : variableDeclaration SEMI
+    | assignment SEMI
     | ifStatement
-    | printStatement ';'
+    | printStatement SEMI
     ;
 
 variableDeclaration : TYPE ID EQ expression ;
@@ -33,37 +35,3 @@ ifStatement
 relationOp : EQEQ | NEQ ;
 
 printStatement : PRINT LPAREN expression RPAREN ;
-
-/* ============== LEXER ============== */
-
-/* Keywords */
-TYPE    : 'int' | 'bool' ;
-PRINT   : 'print' ;
-IF      : 'if' ;
-ELSE    : 'else' ;
-
-ID      : [a-zA-Z]+ ;
-INT     : [0-9]+ ;
-
-/** supports escaped quotes and backslashes */
-STRING
-    : '"' ( '\\' . | ~["\\] )* '"'
-    ;
-
-/* Operators and punctuation */
-LPAREN  : '(' ;
-RPAREN  : ')' ;
-LBRACE  : '{' ;
-RBRACE  : '}' ;
-EQ      : '=' ;
-PLUS    : '+' ;
-MINUS   : '-' ;
-STAR    : '*' ;
-SLASH   : '/' ;
-PERCENT : '%' ;
-EQEQ    : '==' ;
-NEQ     : '!=' ;
-
-/* Comments and whitespace */
-COMMENT : ( '//' ~[\r\n]* | '/*' .*? '*/' ) -> skip ;
-WS      : [ \t\r\n]+ -> skip ;

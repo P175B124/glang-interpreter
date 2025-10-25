@@ -1,10 +1,10 @@
 package edu.ktu.glang.interpreter;
 
-import edu.ktu.glang.GLangBaseVisitor;
+import edu.ktu.glang.GLangParserBaseVisitor;
 import edu.ktu.glang.GLangParser;
 import org.antlr.v4.runtime.Token;
 
-public class InterpreterVisitor extends GLangBaseVisitor<Object> {
+public class InterpreterVisitor extends GLangParserBaseVisitor<Object> {
 
     private final StringBuilder SYSTEM_OUT = new StringBuilder();
 

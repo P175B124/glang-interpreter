@@ -1,10 +1,10 @@
 package edu.ktu.glang.interpreter;
 
-import edu.ktu.glang.GLangBaseVisitor;
+import edu.ktu.glang.GLangParserBaseVisitor;
 import edu.ktu.glang.GLangParser;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-public class IfStatementVisitor extends GLangBaseVisitor<Object> {
+public class IfStatementVisitor extends GLangParserBaseVisitor<Object> {
 
     private final InterpreterVisitor parent;
 
