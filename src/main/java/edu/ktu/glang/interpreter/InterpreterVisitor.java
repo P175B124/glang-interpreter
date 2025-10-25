@@ -2,7 +2,7 @@ package edu.ktu.glang.interpreter;
 
 import edu.ktu.glang.GLangBaseVisitor;
 import edu.ktu.glang.GLangParser;
-
+import org.antlr.v4.runtime.Token;
 
 public class InterpreterVisitor extends GLangBaseVisitor<Object> {
 
@@ -91,10 +91,14 @@ public class InterpreterVisitor extends GLangBaseVisitor<Object> {
     public Object visitIntAddOpExpression(GLangParser.IntAddOpExpressionContext ctx) {
         Object val1 = visit(ctx.expression(0));
         Object val2 = visit(ctx.expression(1));
-        return switch (ctx.intAddOp().getText()) {
-            case "+" -> (Integer) val1 + (Integer) val2;
-            case "-" -> (Integer) val1 - (Integer) val2;
-            default -> null;
+
+        Token op = ctx.intAddOp().getStart();
+        int type = op.getType();
+
+        return switch (type) {
+            case GLangParser.PLUS -> (Integer) val1 + (Integer) val2;
+            case GLangParser.MINUS -> (Integer) val1 - (Integer) val2;
+            default -> throw new IllegalStateException("Unknown add operator token: " + type);
         };
     }
 
@@ -102,12 +106,15 @@ public class InterpreterVisitor extends GLangBaseVisitor<Object> {
     public Object visitIntMultiOpExpression(GLangParser.IntMultiOpExpressionContext ctx) {
         Object val1 = visit(ctx.expression(0));
         Object val2 = visit(ctx.expression(1));
-        //TODO - validation etc
-        return switch (ctx.intMultiOp().getText()) {
-            case "*" -> (Integer) val1 * (Integer) val2;
-            case "/" -> (Integer) val1 / (Integer) val2;
-            case "%" -> (Integer) val1 % (Integer) val2;
-            default -> null;
+
+        Token op = ctx.intMultiOp().getStart();
+        int type = op.getType();
+
+        return switch (type) {
+            case GLangParser.STAR -> (Integer) val1 * (Integer) val2;
+            case GLangParser.SLASH -> (Integer) val1 / (Integer) val2;
+            case GLangParser.PERCENT -> (Integer) val1 % (Integer) val2;
+            default -> throw new IllegalStateException("Unknown multiply operator token: " + type);
         };
     }
 
