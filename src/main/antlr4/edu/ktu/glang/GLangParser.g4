@@ -19,7 +19,7 @@ expression
     : ID                                #idExpression
     | INT                               #intExpression
     | BOOL                              #boolExpression
-    | STRING                            #stringExpression
+    | stringLiteral                     #stringExpression
     | LPAREN expression RPAREN          #parenthesesExpression
     | expression intMultiOp expression  #intMultiOpExpression
     | expression intAddOp expression    #intAddOpExpression
@@ -36,3 +36,12 @@ ifStatement
 relationOp : EQEQ | NEQ ;
 
 printStatement : PRINT LPAREN expression RPAREN ;
+
+stringLiteral
+    : STRING_START stringPart* STRING_END
+    ;
+
+stringPart
+    : STRING_TEXT
+    | INTERP_START expression INTERP_END
+    ;

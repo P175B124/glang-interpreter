@@ -64,10 +64,20 @@ public class InterpreterVisitor extends GLangParserBaseVisitor<Object> {
 
     @Override
     public Object visitStringExpression(GLangParser.StringExpressionContext ctx) {
-        String raw = ctx.STRING().getText();
-        String unquoted = raw.substring(1, raw.length() - 1);  // remove quotes
-        String value = unescape(unquoted);             // decode escapes
-        return value;
+        StringBuilder sb = new StringBuilder();
+
+        for (GLangParser.StringPartContext part : ctx.stringLiteral().stringPart()) {
+            if (part.STRING_TEXT() != null) {
+                // plain text
+                sb.append(unescape(part.STRING_TEXT().getText()));
+            } else if (part.expression() != null) {
+                // ${ expression }
+                Object value = visit(part.expression());
+                sb.append(value.toString());
+            }
+        }
+
+        return sb.toString();
     }
 
     private static String unescape(String s) {
