@@ -7,8 +7,9 @@ IF      : 'if' ;
 ELSE    : 'else' ;
 
 /* Identifiers & literals */
-ID      : [a-zA-Z]+ ;
 INT     : [0-9]+ ;
+BOOL    : 'true' | 'false' ;
+ID      : [a-zA-Z]+ ; //must be after bool
 
 /** Simple string literal: supports escaped quotes and backslashes */
 STRING  : '"' ( '\\' . | ~["\\] )* '"' ;

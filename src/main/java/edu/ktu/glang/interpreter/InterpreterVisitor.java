@@ -47,14 +47,19 @@ public class InterpreterVisitor extends GLangParserBaseVisitor<Object> {
     }
 
     @Override
+    public Object visitIdExpression(GLangParser.IdExpressionContext ctx) {
+        String varName = ctx.ID().getText();
+        return this.symbolTable.get(varName);
+    }
+
+    @Override
     public Object visitIntExpression(GLangParser.IntExpressionContext ctx) {
         return Integer.parseInt(ctx.INT().getText());
     }
 
     @Override
-    public Object visitIdExpression(GLangParser.IdExpressionContext ctx) {
-        String varName = ctx.ID().getText();
-        return this.symbolTable.get(varName);
+    public Object visitBoolExpression(GLangParser.BoolExpressionContext ctx) {
+        return Boolean.parseBoolean(ctx.BOOL().getText());
     }
 
     @Override

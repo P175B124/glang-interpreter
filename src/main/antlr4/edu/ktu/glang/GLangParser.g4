@@ -16,8 +16,9 @@ variableDeclaration : TYPE ID EQ expression ;
 assignment : ID EQ expression ;
 
 expression
-    : INT                               #intExpression
-    | ID                                #idExpression
+    : ID                                #idExpression
+    | INT                               #intExpression
+    | BOOL                              #boolExpression
     | STRING                            #stringExpression
     | LPAREN expression RPAREN          #parenthesesExpression
     | expression intMultiOp expression  #intMultiOpExpression
